@@ -167,38 +167,41 @@ bool Burst::MinerProtocol::run(Miner* miner)
 
 uint64_t Burst::MinerProtocol::submitNonce(uint64_t nonce, uint64_t accountId)
 {
-    NxtAddress addr(accountId);
-    MinerLogger::write("submitting nonce "+std::to_string(nonce)+" for "+addr.to_string());
-    std::string request = "";
-    std::string mode = this->miner->getConfig()->mode;
-    if(mode == "solo")
+    if(nonce < this->miner->getConfig()->maxDeadline)
     {
-	std::string passPhrase = this->miner->getConfig()->passPhrase;
-	request = "requestType=submitNonce&nonce="+std::to_string(nonce)+"&secretPhrase="+passPhrase;
-    }
-    else
-    {
-	request = "requestType=submitNonce&nonce="+std::to_string(nonce)+"&accountId="+std::to_string(accountId)+"&secretPhrase=cryptoport";
-    }
-    std::string url = "/burst?"+request;
-    
-    size_t tryCount = 0;
-    std::string response = "";
-    do{
-        response = this->nonceSubmitterSocket.httpPost(url,"");
-        tryCount++;
-    }
-    while(response.empty() && tryCount < this->miner->getConfig()->submissionMaxRetry);
-          
-    MinerLogger::write(response);
-    rapidjson::Document body;
-    body.Parse<0>(response.c_str());
-    
-    if(body.GetParseError() == nullptr)
-    {
-        if(body.HasMember("deadline"))
+	NxtAddress addr(accountId);
+        MinerLogger::write("submitting nonce "+std::to_string(nonce)+" for "+addr.to_string());
+        std::string request = "";
+        std::string mode = this->miner->getConfig()->mode;
+        if(mode == "solo")
         {
-            return body["deadline"].GetUint64();
+    	std::string passPhrase = this->miner->getConfig()->passPhrase;
+    	request = "requestType=submitNonce&nonce="+std::to_string(nonce)+"&secretPhrase="+passPhrase;
+        }
+        else
+        {
+    	request = "requestType=submitNonce&nonce="+std::to_string(nonce)+"&accountId="+std::to_string(accountId)+"&secretPhrase=cryptoport";
+        }
+        std::string url = "/burst?"+request;
+        
+        size_t tryCount = 0;
+        std::string response = "";
+        do{
+            response = this->nonceSubmitterSocket.httpPost(url,"");
+            tryCount++;
+        }
+        while(response.empty() && tryCount < this->miner->getConfig()->submissionMaxRetry);
+              
+        MinerLogger::write(response);
+        rapidjson::Document body;
+        body.Parse<0>(response.c_str());
+        
+        if(body.GetParseError() == nullptr)
+        {
+            if(body.HasMember("deadline"))
+            {
+                return body["deadline"].GetUint64();
+            }
         }
     }
     return (uint64_t)(-1);
