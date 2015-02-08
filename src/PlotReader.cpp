@@ -1,3 +1,12 @@
+//  Modified Burstcoin Miner
+//  with added solo mining capability
+// 
+//  Author: Luc Van Braekel <luc@lvb.net> 2015
+//
+//  Burst: BURST-3XFG-2JSB-HCUX-7HXBC
+//  Bitcoin: 19ZgsPHQFNRDcM8An7yg1Jaj87F1VwN7ci
+//
+//  Based on:
 //  cryptoport.io Burst Pool Miner
 //
 //  Created by Uray Meiviar < uraymeiviar@gmail.com > 2014
@@ -138,6 +147,7 @@ void Burst::PlotReader::readerThread()
         }
         */
         
+	time_t startTime = time(NULL);
         this->runVerify = true;
         std::thread verifierThreadObj(&PlotReader::verifierThread,this);
         
@@ -224,7 +234,9 @@ void Burst::PlotReader::readerThread()
         verifierThreadObj.join();
         
         this->done = true;
-        MinerLogger::write("plot read done. "+Burst::getFileNameFromPath(this->inputPath)+" = "+std::to_string(this->nonceRead)+" nonces ");
+	time_t elapsedTime = time(NULL) - startTime;
+	MinerLogger::write("plot read done in "+std::to_string(elapsedTime)+" seconds: ");
+        MinerLogger::write(Burst::getFileNameFromPath(this->inputPath)+" = "+std::to_string(this->nonceRead)+" nonces ");
     }
 }
 

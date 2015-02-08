@@ -30,6 +30,11 @@ Added functionalities by Luc Van Braekel:
 
 	For pool mining, choose a high value in order not to lose any shares.
 
++ Timing reporting of plotreader threads:
+
+	Each thrad will report the number of seconds used for reading the plots.
+
+
 Contact : Luc Van Braekel [ luc@lvb.net ]
 
 + [ Burst   ] `BURST-3XFG-2JSB-HCUX-7HXBC`
