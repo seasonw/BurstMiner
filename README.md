@@ -11,14 +11,23 @@ Based on burst-miner by Uray Meiviar.
 Added functionalities by Luc Van Braekel:
 
 + Solo mining:
+
 Add the following lines to the mining.conf file:
+
 `"mode" : "solo",`
+
 `"passPhrase" : "your passphrase here"`
+
 This miner is only multi-account when pool mining.
+
 + Max Deadline to be submitted to server:
+
 Add the following line to the mining.conf file:
+
 `"maxDeadline" : "5000"`
+
 For solo mining, choose a low value like 5000 to withhold useless deadlines.
+
 For pool mining, choose a high value in order not to lose any shares.
 
 Contact : Luc Van Braekel [ luc@lvb.net ]
