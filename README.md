@@ -13,7 +13,7 @@ Added functionalities by Luc Van Braekel:
 Solo mining:
 Add the following lines to the mining.conf file:
 + "mode" : "solo",
-+ "passPhrase" : "<your passphrase>"
++ "passPhrase" : "your passphrase here"
 
 This miner is only multi-account when pool mining.
 
