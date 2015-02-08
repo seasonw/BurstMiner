@@ -1,3 +1,12 @@
+//  Modified Burstcoin Miner
+//  with added solo mining capability
+// 
+//  Author: Luc Van Braekel <luc@lvb.net> 2015
+//
+//  Burst: BURST-3XFG-2JSB-HCUX-7HXBC
+//  Bitcoin: 19ZgsPHQFNRDcM8An7yg1Jaj87F1VwN7ci
+//
+//  Based on:
 //  cryptoport.io Burst Pool Miner
 //
 //  Created by Uray Meiviar < uraymeiviar@gmail.com > 2014
@@ -10,13 +19,11 @@
 
 int main(int argc, const char* argv[])
 {
-    Burst::MinerLogger::write("Burst cryptoport Miners");
+    Burst::MinerLogger::write("Modified Burst Miner");
     Burst::MinerLogger::write("-----------------------");
-    Burst::MinerLogger::write("http://github.com/uraymeiviar/burst-miner");
-    Burst::MinerLogger::write("author : uray meiviar [ uraymeiviar@gmail.com ]");
-    Burst::MinerLogger::write("please donate to support developments :");
-    Burst::MinerLogger::write(" [ Burst   ] BURST-8E8K-WQ2F-ZDZ5-FQWHX");
-    Burst::MinerLogger::write(" [ Bitcoin ] 1UrayjqRjSJjuouhJnkczy5AuMqJGRK4b");
+    Burst::MinerLogger::write("http://github.com/lucvanbraekel/burst-miner");
+    Burst::MinerLogger::write("author : Luc Van Braekel [ luc@lvb.net ]");
+    Burst::MinerLogger::write("based on cryptoport miner by Uray Meiviar");
     Burst::MinerLogger::write(" ");
 
 #ifdef WIN32
@@ -44,8 +51,13 @@ int main(int argc, const char* argv[])
     {
         Burst::MinerLogger::write("Submission Max Delay : "+ std::to_string(config.submissionMaxDelay));
         Burst::MinerLogger::write("Submission Max Retry : "+ std::to_string(config.submissionMaxRetry));
+        Burst::MinerLogger::write("Submission Max Deadline : "+ std::to_string(config.maxDeadline));
         Burst::MinerLogger::write("Buffer Size : "+ std::to_string(config.maxBufferSizeMB)+"MB");
         Burst::MinerLogger::write("Pool Host : "+config.poolHost+" port "+ std::to_string(config.poolPort));
+	if (config.mode.length() > 0)
+	{
+            Burst::MinerLogger::write("Mode : "+config.mode);
+	}
         
         Burst::Miner miner(config);
         miner.run();

@@ -49,6 +49,7 @@ namespace Burst
         std::vector<std::string> plotList;
 	std::string mode = "";
 	std::string passPhrase = "";
+	size_t maxDeadline = 5000000;
         
         static const size_t hashSize = 32;
         static const size_t scoopPerPlot = 4096;

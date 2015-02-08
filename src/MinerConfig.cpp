@@ -59,6 +59,18 @@ bool Burst::MinerConfig::readConfigFile(const std::string configPath)
         return false;
     }
 
+    if(configDoc.HasMember("maxDeadline"))
+    {
+	if(configDoc["maxDeadline"].IsNumber())
+	{
+	    this->maxDeadline = configDoc["maxDeadline"].GetInt();
+        }
+	else
+	{
+	    this->maxDeadline = 5000000;
+	}
+    }
+
     if(configDoc.HasMember("mode"))
     {
 	this->mode = configDoc["mode"].GetString();
@@ -71,7 +83,7 @@ bool Burst::MinerConfig::readConfigFile(const std::string configPath)
 	    }
 	    else
 	    {
-		MinerLogger::write("--> Solo mode but no passphrase present.");
+		MinerLogger::write("Solo mode but no passphrase present.");
 		return false;
 	    }
 	}
