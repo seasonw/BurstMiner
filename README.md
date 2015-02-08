@@ -1,15 +1,26 @@
 burst-miner
 ===========
 
-native burstcoin miner, its fast, its multithreaded, low memory usage, multi-account and multi-plot
-you can specity plot directory or files inside mining.conf file
+Native burstcoin miner.
 
-contact : uray meiviar [ uraymeiviar@gmail.com ]
+Fast, multithreaded, low memory usage, multi-account and multi-plot.
+You can specity plot directories or files inside mining.conf file.
 
-please donate to support developments :
+Based on burst-miner by Uray Meiviar.
 
-+ [ Burst   ] `BURST-8E8K-WQ2F-ZDZ5-FQWHX`
-+ [ Bitcoin ] `1UrayjqRjSJjuouhJnkczy5AuMqJGRK4b`
+Added functionalities by Luc Van Braekel:
+
+Solo mining:
+Add the following lines to the mining.conf file:
++ "mode" : "solo",
++ "passPhrase" : "<your passphrase>"
+
+This miner is only multi-account when pool mining.
+
+Contact : Luc Van Braekel [ luc@lvb.net ]
+
++ [ Burst   ] `BURST-3XFG-2JSB-HCUX-7HXBC`
++ [ Bitcoin ] `19ZgsPHQFNRDcM8An7yg1Jaj87F1VwN7ci`
 
 ## compilation :
 tested on OSX and Linux using GCC 4.8.x

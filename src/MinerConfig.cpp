@@ -1,5 +1,12 @@
+//  Modified Burstcoin Miner
+//  with added solo mining capability
+// 
+//  Author: Luc Van Braekel <luc@lvb.net> 2015
 //
-//  MinerConfig.cpp
+//  Burst: BURST-3XFG-2JSB-HCUX-7HXBC
+//  Bitcoin: 19ZgsPHQFNRDcM8An7yg1Jaj87F1VwN7ci
+//
+//  Based on:
 //  cryptoport-miner
 //
 //  Created by Uray Meiviar on 9/15/14.
@@ -50,6 +57,25 @@ bool Burst::MinerConfig::readConfigFile(const std::string configPath)
         }
         MinerLogger::write("--> "+configContentStr.substr(parseErrorLoc,sampleLen)+"...");
         return false;
+    }
+
+    if(configDoc.HasMember("mode"))
+    {
+	this->mode = configDoc["mode"].GetString();
+	if(this->mode == "solo")
+	{
+	    if(configDoc.HasMember("passPhrase"))
+	    {
+		this->passPhrase = configDoc["passPhrase"].GetString();
+		std::replace(this->passPhrase.begin(), this->passPhrase.end(), ' ', '+');
+		MinerLogger::write("--> passPhrase="+this->passPhrase);
+	    }
+	    else
+	    {
+		MinerLogger::write("--> Solo mode but no passphrase present.");
+		return false;
+	    }
+	}
     }
     
     if(configDoc.HasMember("poolUrl"))

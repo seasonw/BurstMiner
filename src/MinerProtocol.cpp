@@ -1,3 +1,12 @@
+//  Modified Burstcoin Miner
+//  with added solo mining capability
+// 
+//  Author: Luc Van Braekel <luc@lvb.net> 2015
+//
+//  Burst: BURST-3XFG-2JSB-HCUX-7HXBC
+//  Bitcoin: 19ZgsPHQFNRDcM8An7yg1Jaj87F1VwN7ci
+//
+//  Based on:
 //  cryptoport.io Burst Pool Miner
 //
 //  Created by Uray Meiviar < uraymeiviar@gmail.com > 2014
@@ -160,7 +169,17 @@ uint64_t Burst::MinerProtocol::submitNonce(uint64_t nonce, uint64_t accountId)
 {
     NxtAddress addr(accountId);
     MinerLogger::write("submitting nonce "+std::to_string(nonce)+" for "+addr.to_string());
-    std::string request = "requestType=submitNonce&nonce="+std::to_string(nonce)+"&accountId="+std::to_string(accountId)+"&secretPhrase=cryptoport";
+    std::string request = "";
+    std::string mode = this->miner->getConfig()->mode;
+    if(mode == "solo")
+    {
+	std::string passPhrase = this->miner->getConfig()->passPhrase;
+	request = "requestType=submitNonce&nonce="+std::to_string(nonce)+"&secretPhrase="+passPhrase;
+    }
+    else
+    {
+	request = "requestType=submitNonce&nonce="+std::to_string(nonce)+"&accountId="+std::to_string(accountId)+"&secretPhrase=cryptoport";
+    }
     std::string url = "/burst?"+request;
     
     size_t tryCount = 0;

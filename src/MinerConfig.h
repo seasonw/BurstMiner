@@ -1,3 +1,12 @@
+//  Modified Burstcoin Miner
+//  with added solo mining capability
+// 
+//  Author: Luc Van Braekel <luc@lvb.net> 2015
+//
+//  Burst: BURST-3XFG-2JSB-HCUX-7HXBC
+//  Bitcoin: 19ZgsPHQFNRDcM8An7yg1Jaj87F1VwN7ci
+//
+//  Based on:
 //  cryptoport.io Burst Pool Miner
 //
 //  Created by Uray Meiviar < uraymeiviar@gmail.com > 2014
@@ -38,6 +47,8 @@ namespace Burst
         size_t maxBufferSizeMB = 64;
         std::string configPath;
         std::vector<std::string> plotList;
+	std::string mode = "";
+	std::string passPhrase = "";
         
         static const size_t hashSize = 32;
         static const size_t scoopPerPlot = 4096;
