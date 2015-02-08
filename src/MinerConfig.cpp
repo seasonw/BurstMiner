@@ -68,7 +68,6 @@ bool Burst::MinerConfig::readConfigFile(const std::string configPath)
 	    {
 		this->passPhrase = configDoc["passPhrase"].GetString();
 		std::replace(this->passPhrase.begin(), this->passPhrase.end(), ' ', '+');
-		MinerLogger::write("--> passPhrase="+this->passPhrase);
 	    }
 	    else
 	    {
