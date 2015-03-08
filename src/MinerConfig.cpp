@@ -248,6 +248,7 @@ bool Burst::MinerConfig::addPlotLocation(const std::string fileOrPath)
     {
         this->addPlotFile(fileOrPath);
     }
+	MinerLogger::write(std::to_string(this->plotList.size()) + " Plotfiles found.");
     return true;
 }
 
@@ -263,7 +264,7 @@ bool Burst::MinerConfig::addPlotFile(std::string file)
             }
         }
         this->plotList.push_back(file);
-        MinerLogger::write("Plot "+std::to_string(this->plotList.size())+": "+file);
+        //MinerLogger::write("Plot "+std::to_string(this->plotList.size())+": "+file);
         return true;
     }
     return false;

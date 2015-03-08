@@ -170,7 +170,7 @@ uint64_t Burst::MinerProtocol::submitNonce(uint64_t nonce, uint64_t accountId)
     if(this->miner->getDeadline(accountId) < this->miner->getConfig()->maxDeadline)
     {
 	NxtAddress addr(accountId);
-        MinerLogger::write("submitting nonce "+std::to_string(nonce)+" for "+addr.to_string());
+        //MinerLogger::write("submitting nonce "+std::to_string(nonce)+" for "+addr.to_string());
         std::string request = "";
         std::string mode = this->miner->getConfig()->mode;
         if(mode == "solo")
@@ -263,7 +263,7 @@ std::string Burst::MinerProtocol::resolveHostname(const std::string host)
     for(i = 0; addr_list[i] != NULL; i++)
     {
 		std::string ip = std::string(inet_ntop(AF_INET, addr_list[i], inetAddrStr,64));
-        MinerLogger::write("Remote IP "+ip);
+        MinerLogger::write("Remote IP: "+ip);
         return ip;
     }
     
