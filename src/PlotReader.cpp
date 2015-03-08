@@ -61,92 +61,7 @@ void Burst::PlotReader::readerThread()
 	std::ifstream inputStream(this->inputPath, std::ifstream::binary);
     if(inputStream.good())
     {
-        /*
-        inputStream.clear();
-        this->runVerify = true;
-        std::unique_lock<std::mutex> verifyLock(this->readLock);
-        verifyLock.unlock();
-        std::thread verifierThreadObj(&PlotReader::verifierThread,this);
-        
-        size_t readlimit = this->miner->getConfig()->maxBufferSizeMB / 32;
-        size_t scoopBufferCount = this->staggerSize / readlimit;
-        size_t scoopBufferSize = readlimit;
-        size_t scoopDoneRead = 0;
-        while(scoopDoneRead <= scoopBufferCount)
-        {
-            size_t staggerOffset = this->scoopNum * MinerConfig::scoopSize * scoopDoneRead * scoopBufferSize;
-            if(scoopBufferSize > (this->staggerSize - (scoopDoneRead * scoopBufferSize)))
-            {
-                scoopBufferSize = this->staggerSize - (scoopDoneRead * scoopBufferSize);
-            }
-            
-            this->buffer[0].resize(scoopBufferSize);
-            this->buffer[1].resize(scoopBufferSize);
-            this->readBuffer  = &this->buffer[0];
-            this->writeBuffer = &this->buffer[1];
-            
-            size_t bufferSize  = scoopBufferSize * MinerConfig::scoopSize;
-            size_t startByte = this->scoopNum * MinerConfig::scoopSize * scoopBufferSize + staggerOffset;
-            size_t chunkNum = 0;
-            size_t totalChunk = this->nonceCount / scoopBufferSize;
-            this->nonceOffset = 0;
-            
-            while(!this->done && inputStream.good() && chunkNum <= totalChunk)
-            {
-                inputStream.seekg(startByte + chunkNum*scoopBufferSize*MinerConfig::plotSize);
-                char* scoopData = (char*)&(*this->writeBuffer)[0];
-                inputStream.read(scoopData, bufferSize);
-                
-                verifyLock.lock();
-                std::vector<ScoopData>* temp = this->readBuffer;
-                this->readBuffer  = this->writeBuffer;
-                this->writeBuffer = temp;
-                this->nonceOffset = chunkNum*scoopBufferSize;
-                verifyLock.unlock();
-                this->readSignal.notify_all();
-                
-                chunkNum++;
-            }
-            
-            scoopDoneRead++;
-        }
-        */
-        
-        /*
-        this->buffer[0].resize(this->staggerSize);
-        this->buffer[1].resize(this->staggerSize);
-        this->readBuffer  = &this->buffer[0];
-        this->writeBuffer = &this->buffer[1];
-        
-        size_t bufferSize  = this->staggerSize * MinerConfig::scoopSize;
-        size_t startByte = scoopNum * MinerConfig::scoopSize * this->staggerSize;
-        size_t chunkNum = 0;
-        size_t totalChunk = this->nonceCount / this->staggerSize;
-        this->nonceOffset = 0;
-
-        this->runVerify = true;
-        std::unique_lock<std::mutex> verifyLock(this->readLock);
-        verifyLock.unlock();
-        std::thread verifierThreadObj(&PlotReader::verifierThread,this);
-        
-        while(!this->done && inputStream.good() && chunkNum <= totalChunk)
-        {
-            inputStream.seekg(startByte + chunkNum*this->staggerSize*MinerConfig::plotSize);
-            char* scoopData = (char*)&(*this->writeBuffer)[0];
-            inputStream.read(scoopData, bufferSize);
-            
-            verifyLock.lock();
-                std::vector<ScoopData>* temp = this->readBuffer;
-                this->readBuffer  = this->writeBuffer;
-                this->writeBuffer = temp;
-                this->nonceOffset = chunkNum*this->staggerSize;
-            verifyLock.unlock();
-            this->readSignal.notify_all();
-            
-            chunkNum++;
-        }
-        */
-        
+    	
 	time_t startTime = time(NULL);
         this->runVerify = true;
         std::thread verifierThreadObj(&PlotReader::verifierThread,this);
@@ -235,8 +150,9 @@ void Burst::PlotReader::readerThread()
         
         this->done = true;
 	time_t elapsedTime = time(NULL) - startTime;
-	MinerLogger::write("plot read done in "+std::to_string(elapsedTime)+" seconds: ");
-        MinerLogger::write(Burst::getFileNameFromPath(this->inputPath)+" = "+std::to_string(this->nonceRead)+" nonces ");
+	MinerLogger::write("Plotfile " + Burst::getStartNonceFromPlotFile(this->inputPath) + " containing " + std::to_string(this->nonceCount) + " nonces was read in " + std::to_string(elapsedTime) + " seconds.");
+	//MinerLogger::write("plot read done in "+std::to_string(elapsedTime)+" seconds: ");
+        //MinerLogger::write(Burst::getFileNameFromPath(this->inputPath)+" = "+std::to_string(this->nonceRead)+" nonces ");
     }
 }
 
