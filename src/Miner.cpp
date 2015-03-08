@@ -79,6 +79,11 @@ const Burst::GensigData& Burst::Miner::getGensig() const
     return this->gensig;
 }
 
+uint64_t Burst::Miner::getDeadline(uint64_t accountId)
+{
+	return this->bestDeadline[accountId];
+}
+
 uint64_t Burst::Miner::getBaseTarget() const
 {
     return this->baseTarget;
