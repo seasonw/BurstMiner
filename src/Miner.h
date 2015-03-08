@@ -99,6 +99,7 @@ namespace Burst
         void run();
         size_t getScoopNum() const;
         uint64_t getBaseTarget() const;
+        uint64_t getDeadline(uint64_t accountId);
         const GensigData& getGensig() const;
         const MinerConfig* getConfig() const;
         void updateGensig(const std::string gensigStr, uint64_t blockHeight, uint64_t baseTarget);
