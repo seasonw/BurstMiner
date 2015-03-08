@@ -167,7 +167,7 @@ bool Burst::MinerProtocol::run(Miner* miner)
 
 uint64_t Burst::MinerProtocol::submitNonce(uint64_t nonce, uint64_t accountId)
 {
-    if(nonce < this->miner->getConfig()->maxDeadline)
+    if(this->miner->getDeadline(accountId) < this->miner->getConfig()->maxDeadline)
     {
 	NxtAddress addr(accountId);
         MinerLogger::write("submitting nonce "+std::to_string(nonce)+" for "+addr.to_string());
