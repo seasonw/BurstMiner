@@ -18,21 +18,20 @@ Remodified by cuthulino
 
 	Add the following lines to the mining.conf file:
 
-	`"mode" : "solo"`
+	`"mode" : solo`
 
-	`"passPhrase" : "your passphrase here"`
+	`"passPhrase" : your passphrase here`
 
-	This miner is only multi-account when pool mining.
 
 + Max Deadline to be submitted to server:
 
 	Just change the following line in the mining.conf file:
 
-	`"maxDeadline" : "????`
+	`"maxDeadline" : ????`
 
 	For solo mining, choose a low value like 5000 to withhold useless deadlines.
 
-	For pool mining, choose a high value in order not to lose any shares.
+	For pool mining, choose a high value in order not to lose any shares or use the max for your pool.
 
 + Time reporting:
 
