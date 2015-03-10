@@ -9,7 +9,9 @@ This miner only displays
 - deadline result
 
 Based on burst-miner by Uray Meiviar.
+
 Added functionalities by Luc Van Braekel:
+
 Remodified by cuthulino
 
 + Solo mining:
