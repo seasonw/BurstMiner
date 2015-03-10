@@ -154,7 +154,7 @@ void Burst::PlotReader::readerThread()
 	{
 		this->miner->avtime = time(NULL) - this->miner->avtime;
 		MinerLogger::write("Readtime for " + std::to_string(this->miner->plotreadcount) + " files was " + std::to_string(this->miner->avtime)+" seconds");
-		if (this->miner->getDeadline(std::stoull(getAccountIdFromPlotFile(this->inputPath))) < this->miner->getConfig()->maxDeadline)
+		if (this->miner->getDeadline(std::stoull(getAccountIdFromPlotFile(this->inputPath))) > this->miner->getConfig()->maxDeadline)
 		{
 			MinerLogger::write("No deadline <" + std::to_string(this->miner->getConfig()->maxDeadline)+" found");
 		}
