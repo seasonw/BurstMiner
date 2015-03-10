@@ -1,4 +1,4 @@
-burst-miner
+Burstcoin-Miner
 ===========
 
 Burstcoin Miner with low Output
@@ -6,7 +6,7 @@ Burstcoin Miner with low Output
 This miner only displays
 - current block
 - readtime for plotfiles
-- submission result or no deadline
+- deadline result
 
 Based on burst-miner by Uray Meiviar.
 Added functionalities by Luc Van Braekel:
