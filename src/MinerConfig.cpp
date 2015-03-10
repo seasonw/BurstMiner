@@ -18,6 +18,7 @@
 void Burst::MinerConfig::rescan()
 {
     this->readConfigFile(this->configPath);
+	//MinerLogger::write(std::to_string(this->plotList.size()) + " Plotfiles found.");
 }
 
 bool Burst::MinerConfig::readConfigFile(const std::string configPath)
@@ -138,6 +139,7 @@ bool Burst::MinerConfig::readConfigFile(const std::string configPath)
             MinerLogger::write("Invalid plot file or directory in config file "+configPath);
             return false;
         }
+		
     }
     else
     {
@@ -248,7 +250,7 @@ bool Burst::MinerConfig::addPlotLocation(const std::string fileOrPath)
     {
         this->addPlotFile(fileOrPath);
     }
-	MinerLogger::write(std::to_string(this->plotList.size()) + " Plotfiles found.");
+	//MinerLogger::write(std::to_string(this->plotList.size()) + " Plotfiles found. Reading ...");
     return true;
 }
 

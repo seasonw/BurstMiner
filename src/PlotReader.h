@@ -17,7 +17,6 @@ namespace Burst
     public:
         PlotReader(Miner* miner);
         ~PlotReader();
-        
         void read(const std::string path);
         void stop();
         bool isDone() const;
@@ -25,7 +24,7 @@ namespace Burst
     private:
         void readerThread();
         void verifierThread();
-        
+		
         size_t nonceStart;
         size_t scoopNum;
         size_t nonceCount;

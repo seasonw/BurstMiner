@@ -38,10 +38,9 @@ namespace Burst
     public:
         bool readConfigFile(const std::string configPath);
         void rescan();
-        
         size_t submissionMaxDelay = 60;
         size_t submissionMaxRetry = 5;
-        std::string poolHost = "burst-pool.cryptoport.io";
+        std::string poolHost = "burst.ninja:8124";
         size_t poolPort = 80;
         size_t socketTimeout = 30;
         size_t maxBufferSizeMB = 64;
@@ -49,7 +48,7 @@ namespace Burst
         std::vector<std::string> plotList;
 	std::string mode = "";
 	std::string passPhrase = "";
-	size_t maxDeadline = 5000000;
+	size_t maxDeadline = 3888000;
         
         static const size_t hashSize = 32;
         static const size_t scoopPerPlot = 4096;

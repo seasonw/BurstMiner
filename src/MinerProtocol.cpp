@@ -192,7 +192,7 @@ uint64_t Burst::MinerProtocol::submitNonce(uint64_t nonce, uint64_t accountId)
         }
         while(response.empty() && tryCount < this->miner->getConfig()->submissionMaxRetry);
               
-        MinerLogger::write(response);
+        //MinerLogger::write(response);
         rapidjson::Document body;
         body.Parse<0>(response.c_str());
         
@@ -249,7 +249,7 @@ std::string Burst::MinerProtocol::resolveHostname(const std::string host)
     struct in_addr **addr_list;
     int i;
     
-    MinerLogger::write("resolving hostname "+host);
+    //MinerLogger::write("resolving hostname "+host);
     
     if ( (he = gethostbyname( host.c_str() ) ) == NULL)
     {

@@ -19,11 +19,11 @@
 
 int main(int argc, const char* argv[])
 {
-    Burst::MinerLogger::write("Modified Burst Miner");
-    Burst::MinerLogger::write("-----------------------");
-    Burst::MinerLogger::write("https://github.com/cuthulino/BurstMiner");
-    Burst::MinerLogger::write("author : cuthulino");
-    Burst::MinerLogger::write("based on cryptoport miner by Uray Meiviar, forked by Luc Van Breakel");
+    //Burst::MinerLogger::write("Modified Burst Miner");
+    //Burst::MinerLogger::write("-----------------------");
+    //Burst::MinerLogger::write("https://github.com/cuthulino/BurstMiner");
+    //Burst::MinerLogger::write("author : cuthulino");
+    //Burst::MinerLogger::write("based on cryptoport miner by Uray Meiviar, forked by Luc Van Breakel");
     Burst::MinerLogger::write(" ");
 
 #ifdef WIN32
@@ -49,11 +49,12 @@ int main(int argc, const char* argv[])
     Burst::MinerConfig config;
     if( config.readConfigFile(configFile) )
     {
+		Burst::MinerLogger::write("Config:");
         Burst::MinerLogger::write("Submission Max Delay: "+ std::to_string(config.submissionMaxDelay));
         Burst::MinerLogger::write("Submission Max Retry: "+ std::to_string(config.submissionMaxRetry));
         Burst::MinerLogger::write("Submission Max Deadline: "+ std::to_string(config.maxDeadline));
         Burst::MinerLogger::write("Buffer Size: "+ std::to_string(config.maxBufferSizeMB)+"MB");
-        Burst::MinerLogger::write("Pool Host: "+config.poolHost+" port "+ std::to_string(config.poolPort));
+        Burst::MinerLogger::write("Pool Host: "+config.poolHost+"  Port: "+ std::to_string(config.poolPort));
 	if (config.mode.length() > 0)
 	{
             Burst::MinerLogger::write("Mode: "+config.mode);

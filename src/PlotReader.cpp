@@ -61,8 +61,7 @@ void Burst::PlotReader::readerThread()
 	std::ifstream inputStream(this->inputPath, std::ifstream::binary);
     if(inputStream.good())
     {
-    	
-	time_t startTime = time(NULL);
+		//time_t startTime = time(NULL);
         this->runVerify = true;
         std::thread verifierThreadObj(&PlotReader::verifierThread,this);
         
@@ -149,11 +148,24 @@ void Burst::PlotReader::readerThread()
         verifierThreadObj.join();
         
         this->done = true;
-	time_t elapsedTime = time(NULL) - startTime;
-	MinerLogger::write("Plotfile " + Burst::getStartNonceFromPlotFile(this->inputPath) + " containing " + std::to_string(this->nonceCount) + " nonces was read in " + std::to_string(elapsedTime) + " seconds.");
+	//time_t elapsedTime = time(NULL) - startTime;
+	this->miner->plotreadcount++;
+	if (this->miner->plotreadcount == (this->miner->getplotsize()))
+	{
+		this->miner->avtime = time(NULL) - this->miner->avtime;
+		MinerLogger::write("Readtime for " + std::to_string(this->miner->plotreadcount) + " files was " + std::to_string(this->miner->avtime)+" seconds");
+		if (this->miner->getDeadline(std::stoull(getAccountIdFromPlotFile(this->inputPath))) < this->miner->getConfig()->maxDeadline)
+		{
+			MinerLogger::write("No deadline <" + std::to_string(this->miner->getConfig()->maxDeadline)+" found");
+		}
+	}
+	//MinerLogger::write("plotreadcount: " + std::to_string(this->miner->plotreadcount)+" avtime: "+std::to_string(this->miner->avtime));
+
+	//MinerLogger::write(std::to_string(this->miner->getplotsize()));
+	//MinerLogger::write("Plotfile " + Burst::getStartNonceFromPlotFile(this->inputPath) + " with " + std::to_string(this->nonceCount) + " nonces was read in " + std::to_string(elapsedTime) + " seconds.");
 	//MinerLogger::write("plot read done in "+std::to_string(elapsedTime)+" seconds: ");
-        //MinerLogger::write(Burst::getFileNameFromPath(this->inputPath)+" = "+std::to_string(this->nonceRead)+" nonces ");
-    }
+    //MinerLogger::write(Burst::getFileNameFromPath(this->inputPath)+" = "+std::to_string(this->nonceRead)+" nonces ");
+	}
 }
 
 void Burst::PlotReader::verifierThread()

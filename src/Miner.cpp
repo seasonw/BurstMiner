@@ -48,12 +48,16 @@ void Burst::Miner::updateGensig(const std::string gensigStr, uint64_t blockHeigh
 	this->hash.close(&newGenSig[0]);
 	this->scoopNum = ((int)(newGenSig[newGenSig.size()-2] & 0x0F) << 8) | (int)newGenSig[newGenSig.size()-1];
     
-	MinerLogger::write("Current Block:" + std::to_string(blockHeight));
+	MinerLogger::write("");
+	MinerLogger::write("Current Block: " + std::to_string(blockHeight));
     
     this->bestDeadline.clear();
     this->config->rescan();
+	//this->averagereadtime = 0;
     
     this->plotReaders.clear();
+	plotreadcount = 0;
+	avtime = time(NULL);
     for(const std::string path : this->config->plotList)
     {
 		std::shared_ptr<PlotReader> reader = std::shared_ptr<PlotReader>(new PlotReader(this));
@@ -72,6 +76,10 @@ void Burst::Miner::updateGensig(const std::string gensigStr, uint64_t blockHeigh
     this->bestDeadline.clear();
     this->bestNonce.clear();
     this->bestDeadlineConfirmed.clear();
+	{
+
+	}
+
 }
 
 const Burst::GensigData& Burst::Miner::getGensig() const
@@ -82,6 +90,11 @@ const Burst::GensigData& Burst::Miner::getGensig() const
 uint64_t Burst::Miner::getDeadline(uint64_t accountId)
 {
 	return this->bestDeadline[accountId];
+}
+
+uint64_t Burst::Miner::getplotsize()
+{
+	return this->config->plotList.size();
 }
 
 uint64_t Burst::Miner::getBaseTarget() const
@@ -192,12 +205,12 @@ void Burst::Miner::nonceSubmitReport(uint64_t nonce, uint64_t accountId, uint64_
         if(deadline < this->bestDeadlineConfirmed[accountId])
         {
             this->bestDeadlineConfirmed[accountId] = deadline;
-			MinerLogger::write("confirmed dl. for " + addr.to_string() + " : " + Burst::deadlineFormat(deadline));
+			MinerLogger::write("Confirmed deadline is: " + Burst::deadlineFormat(deadline));
         }
     }
     else
     {
         this->bestDeadlineConfirmed.insert(std::make_pair(accountId, deadline));
-		MinerLogger::write("confirmed dl. for " + addr.to_string() + " : " + Burst::deadlineFormat(deadline));
+		MinerLogger::write("Confirmed deadline is: " + Burst::deadlineFormat(deadline));
     }
 }
