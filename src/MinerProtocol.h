@@ -16,9 +16,9 @@ namespace Burst
     {
     public:
         void setRemote(const std::string ip, size_t port,size_t defaultTimeout = 60);
-        std::string httpPost(const std::string url, const std::string body);
+        std::string httpPost(const std::string url, const std::string body, const std::string header);
         std::string httpGet(const std::string url);
-        void httpPostAsync(const std::string url, const std::string body,std::function< void ( std::string ) > responseCallback);
+        void httpPostAsync(const std::string url, const std::string body, const std::string header, std::function< void ( std::string ) > responseCallback);
         void httpGetAsync(const std::string url,std::function< void ( std::string ) > responseCallback);
     private:
         std::string httpRequest(const std::string method, const std::string url,
@@ -49,6 +49,8 @@ namespace Burst
         uint64_t currentBlockHeight;
         uint64_t currentBaseTarget;
         std::string gensig;
+
+        std::string gheader;
         
         MinerSocket miningInfoSocket;
         MinerSocket nonceSubmitterSocket;

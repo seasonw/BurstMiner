@@ -1,6 +1,11 @@
 Burstcoin-Miner
 ===========
 
+Features added in this fork:-
+- add support of uray based miner to mine at pool behind cloudflare or any other DDOS protection engine.
+(Main purpose is to have linux based miner to work on pool behind cloudflare such as burstrenegade and pool.burstcoin.space, tested in Windows too.)
+
+
 Burstcoin Miner with low Output
 
 This miner only displays
@@ -12,7 +17,7 @@ Based on burst-miner by Uray Meiviar.
 
 Added functionalities by Luc Van Braekel:
 
-Remodified by cuthulino
+Forked from cuthulino
 
 + Solo mining:
 

@@ -87,11 +87,11 @@ std::string Burst::MinerSocket::httpRequest(const std::string method,
     return response;
 }
 
-std::string Burst::MinerSocket::httpPost(const std::string url, const std::string body)
+std::string Burst::MinerSocket::httpPost(const std::string url, const std::string body, const std::string header)
 {
-    std::string //header = "Content-Type: application/x-www-form-urlencoded\r\n";
+    //std::string //header = "Content-Type: application/x-www-form-urlencoded\r\n";
                 //header = "Content-Length: "+std::to_string(body.length())+"\r\n";
-                header = "Connection: close";
+                //header = "Connection: close";
     return this->httpRequest("POST",url,body,header);
 }
 
@@ -105,12 +105,12 @@ void Burst::MinerSocket::httpRequestAsync(const std::string method,
     responseCallback(response);
 }
 
-void Burst::MinerSocket::httpPostAsync(const std::string url, const std::string body,
+void Burst::MinerSocket::httpPostAsync(const std::string url, const std::string body, const std::string header,
                                        std::function< void ( std::string ) > responseCallback)
 {
-    std::string //header = "Content-Type: application/x-www-form-urlencoded\r\n";
+    //std::string //header = "Content-Type: application/x-www-form-urlencoded\r\n";
                 //header = "Content-Length: "+std::to_string(body.length())+"\r\n";
-                header = "Connection: close";
+                //header = "Connection: close";
     std::thread requestThread(&MinerSocket::httpRequestAsync,this,"POST",url,body,header,responseCallback);
     requestThread.detach();
 }
@@ -150,6 +150,11 @@ bool Burst::MinerProtocol::run(Miner* miner)
 {
     const MinerConfig* config = miner->getConfig();
     this->miner = miner;
+
+    std::stringstream lssport;
+    lssport << config->poolPort;
+    gheader = "Host: " + config->poolHost + ":" + lssport.str().c_str() + "\r\nContent-Length: 0\r\nConnection: close";
+
     std::string remoteIP = MinerProtocol::resolveHostname(config->poolHost);
     if(remoteIP != "")
     {
@@ -187,7 +192,7 @@ uint64_t Burst::MinerProtocol::submitNonce(uint64_t nonce, uint64_t accountId)
         size_t tryCount = 0;
         std::string response = "";
         do{
-            response = this->nonceSubmitterSocket.httpPost(url,"");
+            response = this->nonceSubmitterSocket.httpPost(url,"",gheader);
             tryCount++;
         }
         while(response.empty() && tryCount < this->miner->getConfig()->submissionMaxRetry);
@@ -209,7 +214,7 @@ uint64_t Burst::MinerProtocol::submitNonce(uint64_t nonce, uint64_t accountId)
 
 void Burst::MinerProtocol::getMiningInfo()
 {
-    std::string response = this->miningInfoSocket.httpPost("/burst?requestType=getMiningInfo","");
+    std::string response = this->miningInfoSocket.httpPost("/burst?requestType=getMiningInfo","",gheader);
     
     if(response.length() > 0)
     {
